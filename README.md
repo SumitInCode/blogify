@@ -18,7 +18,7 @@ Before you start, make sure you have the following installed:
 Clone the repository to your local machine using:
 
 ```bash
-git clone https://github.com/SumitInCode/BookConnect.git
+git clone https://github.com/SumitInCode/blogify.git
 cd blogify
 ```
 
