@@ -1,5 +1,6 @@
 # Blogify
-    Blogify, a Spring Boot-based blogging platform that enables users to effortlessly create, manage, and share blog posts. The project features intuitive post management, customizable themes, and real-time comments, all while ensuring scalability and performance through Spring Boot’s robust framework.
+
+Blogify, a Spring Boot-based blogging platform that enables users to effortlessly create, manage, and share blog posts. The project features intuitive post management, customizable themes, and real-time comments, all while ensuring scalability and performance through Spring Boot’s robust framework.
 
 ## Prerequisites
 
