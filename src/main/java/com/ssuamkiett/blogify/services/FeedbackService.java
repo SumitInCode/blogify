@@ -27,6 +27,7 @@ public class FeedbackService {
     private final BlogRepository blogRepository;
     private final FeedbackRepository feedbackRepository;
     private final FeedbackMapper feedbackMapper;
+
     public Long save(FeedbackRequest feedbackRequest, Authentication connectedUser) {
         Blog blog = blogRepository.findById(feedbackRequest.blogId())
                 .orElseThrow(() -> new EntityNotFoundException("No blog found with the ID : " + feedbackRequest.blogId()));

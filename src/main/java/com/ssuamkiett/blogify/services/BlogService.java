@@ -72,39 +72,19 @@ public class BlogService {
 
     public PageResponse<BlogResponse> findAllBlogs(int page, int size, Authentication connectedUser) {
         Pageable pageable = PageRequest.of(page, size, Sort.by("creationDate").descending());
-        if(connectedUser == null) {
-            return findAllBlogs(pageable);
-        }
-        User user = (User) connectedUser.getPrincipal();
-        Page<Blog> blogs = blogRepository.findAllDisplayableBlogs(pageable, user.getId());
+        Page<Blog> blogs = findAllBlogs(pageable, connectedUser);
         List<BlogResponse> blogResponse = blogs.stream()
                 .map(blogMapper::toBlogResponse)
                 .toList();
-        return new PageResponse<>(
-                blogResponse,
-                blogs.getNumber(),
-                blogs.getSize(),
-                blogs.getTotalElements(),
-                blogs.getTotalPages(),
-                blogs.isFirst(),
-                blogs.isLast()
-        );
+        return buildBlogResponse(blogs, blogResponse);
     }
 
-    private PageResponse<BlogResponse> findAllBlogs(Pageable pageable) {
-        Page<Blog> blogs = blogRepository.findAll(pageable);
-        List<BlogResponse> blogResponse = blogs.stream()
-                .map(blogMapper::toBlogResponse)
-                .toList();
-        return new PageResponse<>(
-                blogResponse,
-                blogs.getNumber(),
-                blogs.getSize(),
-                blogs.getTotalElements(),
-                blogs.getTotalPages(),
-                blogs.isFirst(),
-                blogs.isLast()
-        );
+    private Page<Blog> findAllBlogs(Pageable pageable, Authentication connectedUser) {
+        if(connectedUser == null) {
+            return blogRepository.findAll(pageable);
+        }
+        User user = (User) connectedUser.getPrincipal();
+        return blogRepository.findAllDisplayableBlogs(pageable, user.getId());
     }
 
     public PageResponse<BlogResponse> findAllBlogsByOwner(int page, int size, Authentication connectedUser) {
@@ -114,15 +94,7 @@ public class BlogService {
         List<BlogResponse> blogResponse = blogs.stream()
                 .map(blogMapper::toBlogResponse)
                 .toList();
-        return new PageResponse<>(
-                blogResponse,
-                blogs.getNumber(),
-                blogs.getSize(),
-                blogs.getTotalElements(),
-                blogs.getTotalPages(),
-                blogs.isFirst(),
-                blogs.isLast()
-        );
+        return buildBlogResponse(blogs, blogResponse);
     }
 
     public PageResponse<BlogResponse> findAllBlogsContainingTitle(int page, int size, String title) {
@@ -132,8 +104,12 @@ public class BlogService {
         List<BlogResponse> blogResponse = blogs.stream()
                 .map(blogMapper::toBlogResponse)
                 .toList();
+        return buildBlogResponse(blogs, blogResponse);
+    }
+
+    private PageResponse<BlogResponse> buildBlogResponse(Page<Blog> blogs, List<BlogResponse> blogResponses) {
         return new PageResponse<>(
-                blogResponse,
+                blogResponses,
                 blogs.getNumber(),
                 blogs.getSize(),
                 blogs.getTotalElements(),

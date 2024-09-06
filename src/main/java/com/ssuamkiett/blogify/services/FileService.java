@@ -2,20 +2,15 @@ package com.ssuamkiett.blogify.services;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
-import org.springframework.stereotype.Service;
-import org.springframework.util.FileSystemUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
@@ -25,7 +20,8 @@ public class FileService {
     public void init() {
         try {
             Files.createDirectories(root);
-        } catch (IOException ex) {
+        }
+        catch (IOException ex) {
             throw new RuntimeException("Could not initialize root folder");
         }
     }
@@ -50,7 +46,8 @@ public class FileService {
             else {
                 throw new RuntimeException("Could not read the file!");
             }
-        } catch (MalformedURLException mex) {
+        }
+        catch (MalformedURLException mex) {
             throw new RuntimeException("Error: " + mex.getMessage());
         }
     }

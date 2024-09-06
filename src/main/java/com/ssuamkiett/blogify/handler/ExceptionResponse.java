@@ -6,7 +6,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Map;
 import java.util.Set;
 
 @Data
@@ -18,7 +17,6 @@ public class ExceptionResponse {
     private Integer errorCode;
     private String errorDescription;
     private String error;
-    private Set<String> validationError;
-    private Map<String, String> errors;
-
+    private Set<String> validationErrors;
+    private String contactMessage;
 }
